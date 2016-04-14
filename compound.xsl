@@ -31,7 +31,7 @@
 <h1 id="top"><!--Create the page title-->
 <xsl:apply-templates select="templateparamlist"/>
 <xsl:value-of select="@kind" /><xsl:text> </xsl:text><xsl:apply-templates select="compoundname" /></h1>
-<section>
+<section class="summary">
 <xsl:apply-templates select="detaileddescription"/>
 
 <xsl:if test="sectiondef">
@@ -40,9 +40,6 @@
 <xsl:apply-templates select="sectiondef[@kind='public-func' or @kind='define' or @kind='typedef' or @kind='func' or @kind='enum']|innerclass|innernamespace" mode="brief"/>
 </table>
 </xsl:if>
-</section>
-
-<xsl:apply-templates select="sectiondef[@kind='public-func' or @kind='define' or @kind='func'  or @kind='enum' or @kind='typedef']" />
 
 <xsl:if test="not(@kind='file' or @kind='namespace')">
 <aside>
@@ -62,6 +59,11 @@
 </xsl:if>
 </aside>
 </xsl:if>
+
+</section>
+
+<xsl:apply-templates select="sectiondef[@kind='public-func' or @kind='define' or @kind='func'  or @kind='enum' or @kind='typedef']" />
+
 </docset>
 </xsl:template>
 
