@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<docset type="mainpage">
+	<h1>Project title</h1>
+	<p>Introductory paragraphs</p>
+	<nav>
+		<ul>
+			<li><a href="apiref.html">API reference</a></li>
+		</ul>
+	</nav>
+</docset>
