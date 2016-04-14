@@ -30,7 +30,7 @@ xsltproc --path . --path __doc/xml \
 
 echo "Generating file index"
 xsltproc --path . --path __doc/xml \
-	--stringparam kind "file" --stringparam title "List of files" index.xsl \
+	--stringparam kind "file" --stringparam title "List of files" "$RESOURCEDIR"/index.xsl \
 	__doc/xml/index.xml \
 	| xsltproc --path . --stringparam docparams "$DOCPARAMS" "$RESOURCEDIR"/page.xsl - > __doc/html/files.html
 
@@ -47,7 +47,7 @@ xsltproc --path . --path __doc/xml \
 	| xsltproc --path . --stringparam docparams "$DOCPARAMS" "$RESOURCEDIR"/page.xsl - > __doc/html/structs.html
 
 echo "Generating API reference index"
-xsltproc --path . --path __doc/xml apiref.xsl "$DOCPARAMS" \
+xsltproc --path . --path __doc/xml "$RESOURCEDIR"/apiref.xsl "$DOCPARAMS" \
 	| xsltproc --path . --stringparam docparams "$DOCPARAMS" "$RESOURCEDIR"/page.xsl - > __doc/html/apiref.html
 
 echo "Generating main page"
