@@ -40,11 +40,11 @@
 <xsl:if test="@abstract='yes'">
 <p>This class is abstract</p>
 </xsl:if>
-<xsl:if test="basecompoundref">
-<p>This class is extends</p>
+<xsl:if test="basecompoundref[not(@prot='private')]">
+<p>This class extends</p>
 <ul><xsl:apply-templates select="basecompoundref"/></ul>
 </xsl:if>
-<xsl:if test="derivedcompoundref">
+<xsl:if test="derivedcompoundref[not(@prot='private')]">
 <p>This class is extended by</p>
 <ul><xsl:apply-templates select="derivedcompoundref"/></ul>
 </xsl:if>
@@ -94,9 +94,7 @@ template&lt;<xsl:apply-templates/>&gt;
 <xsl:template match="includes">
 <!--Link to include file-->
 <a>
-<xsl:attribute name="href">
-<xsl:value-of select="@refid"/>.html
-</xsl:attribute>
+<xsl:attribute name="href"><xsl:value-of select="concat(@refid,'.html')"/></xsl:attribute>
 <xsl:apply-templates />
 </a>
 </xsl:template>
@@ -330,9 +328,8 @@ enum <a><xsl:attribute name="href">#<xsl:value-of select="str:split(@id,'_')[las
 </xsl:template>
 
 <xsl:template match="derivedcompoundref|basecompoundref">
-<li><a><xsl:attribute name="href">
-<xsl:value-of select="@refid"/>.html
-</xsl:attribute><xsl:apply-templates/></a></li>
+<li><a><xsl:attribute name="href"><xsl:value-of select="concat(@refid,'.html')"/></xsl:attribute>
+<xsl:apply-templates/></a></li>
 </xsl:template>
 
 <xsl:template match="enumvalue">
