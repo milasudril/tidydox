@@ -32,15 +32,6 @@
 <xsl:apply-templates select="templateparamlist"/>
 <xsl:value-of select="@kind" /><xsl:text> </xsl:text><xsl:apply-templates select="compoundname" /></h1>
 <section class="summary">
-<xsl:apply-templates select="detaileddescription"/>
-
-<xsl:if test="sectiondef">
-<p>The following table summarizes all members in this <xsl:value-of select="@kind" />.</p>
-<table class="memberdecls">
-<xsl:apply-templates select="sectiondef[@kind='public-func' or @kind='define' or @kind='typedef' or @kind='func' or @kind='enum']|innerclass|innernamespace" mode="brief"/>
-</table>
-</xsl:if>
-
 <xsl:if test="not(@kind='file' or @kind='namespace')">
 <aside>
 <h2>Quick info</h2>
@@ -58,6 +49,14 @@
 <ul><xsl:apply-templates select="derivedcompoundref"/></ul>
 </xsl:if>
 </aside>
+</xsl:if>
+<xsl:apply-templates select="detaileddescription"/>
+
+<xsl:if test="sectiondef">
+<p>The following table summarizes all members in this <xsl:value-of select="@kind" />.</p>
+<table class="memberdecls">
+<xsl:apply-templates select="sectiondef[@kind='public-func' or @kind='define' or @kind='typedef' or @kind='func' or @kind='enum']|innerclass|innernamespace" mode="brief"/>
+</table>
 </xsl:if>
 
 </section>
@@ -193,8 +192,6 @@ enum <a><xsl:attribute name="href">#<xsl:value-of select="str:split(@id,'_')[las
 <xsl:apply-templates select="name"/>
 (<xsl:apply-templates select="param"/>)</h2>
 
-<xsl:apply-templates select="detaileddescription" />
-
 <xsl:if test="@static='yes' or @const='yes' or @explicit='yes' or @inline='yes' or @virt='virtual' or @virt='pure-virtual'">
 <!--Add optional infobox-->
 <aside>
@@ -213,6 +210,8 @@ enum <a><xsl:attribute name="href">#<xsl:value-of select="str:split(@id,'_')[las
 </xsl:if>
 </aside>
 </xsl:if>
+
+<xsl:apply-templates select="detaileddescription" />
 </section>
 </xsl:template>
 
@@ -225,13 +224,6 @@ enum <a><xsl:attribute name="href">#<xsl:value-of select="str:split(@id,'_')[las
 <xsl:apply-templates select="type"/><xsl:text> </xsl:text>
 <xsl:apply-templates select="name"/></h2>
 
-<xsl:apply-templates select="detaileddescription" />
-
-<p>The following table summarizes all possible enum values</p>
-<table class="fieldtable">
-<xsl:apply-templates select="enumvalue"/>
-</table>
-
 <xsl:if test="@static='yes' or @const='yes' or @explicit='yes' or @inline='yes' or @virt='virtual' or @virt='pure-virtual'">
 <!--Add optional infobox-->
 <aside>
@@ -250,6 +242,14 @@ enum <a><xsl:attribute name="href">#<xsl:value-of select="str:split(@id,'_')[las
 </xsl:if>
 </aside>
 </xsl:if>
+
+<xsl:apply-templates select="detaileddescription" />
+
+<p>The following table summarizes all possible enum values</p>
+<table class="fieldtable">
+<xsl:apply-templates select="enumvalue"/>
+</table>
+
 </section>
 </xsl:template>
 
@@ -262,8 +262,6 @@ enum <a><xsl:attribute name="href">#<xsl:value-of select="str:split(@id,'_')[las
 <xsl:apply-templates select="type"/><xsl:text> </xsl:text>
 <xsl:apply-templates select="name"/></h2>
 
-<xsl:apply-templates select="detaileddescription" />
-
 <xsl:if test="@static='yes' or @const='yes' or @explicit='yes' or @inline='yes' or @virt='virtual' or @virt='pure-virtual'">
 <!--Add optional infobox-->
 <aside>
@@ -282,6 +280,9 @@ enum <a><xsl:attribute name="href">#<xsl:value-of select="str:split(@id,'_')[las
 </xsl:if>
 </aside>
 </xsl:if>
+
+<xsl:apply-templates select="detaileddescription" />
+
 </section>
 </xsl:template>
 
