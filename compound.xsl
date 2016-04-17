@@ -104,7 +104,7 @@ template&lt;<xsl:apply-templates/>&gt;
 <p><xsl:apply-templates/></p>
 </xsl:template>
 
-<xsl:template match="para[itemizedlist|parameterlist|simplesect]">
+<xsl:template match="para[itemizedlist|orderedlist|parameterlist|simplesect]">
 <!--Paragraphs that contain stuff that must not be inside paragraphs-->
 <xsl:apply-templates/>
 </xsl:template>
@@ -370,6 +370,10 @@ enum <a><xsl:attribute name="href">#<xsl:value-of select="str:split(@id,'_')[las
 
 <xsl:template match="itemizedlist">
 <ul><xsl:apply-templates/></ul>
+</xsl:template>
+
+<xsl:template match="orderedlist">
+<ol><xsl:apply-templates/></ol>
 </xsl:template>
 
 <xsl:template match="listitem">
