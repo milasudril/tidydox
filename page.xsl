@@ -38,14 +38,20 @@
 <header>
 <div class="logo"><xsl:value-of select="document($docparams)/docparams/project/@title"/></div>
 <nav>
-<ul>
 <xsl:if test="not(@type='mainpage')">
+<ul>
 	<li><a href="index.html"><xsl:value-of select="document($docparams)/docparams/project/@title"/></a></li>
-</xsl:if>
-<xsl:if test="not(@type='mainpage' or @type='apiref')">
+<xsl:choose>
+<xsl:when test="@type='class' or @type='struct' or @type='namespace' or @type='file' or @type='index'">
 	<li><a href="apiref.html">API reference</a></li>
+</xsl:when>
+<xsl:otherwise>
+<xsl:if test="not(@root='true')">
+	<li><a><xsl:attribute name="href"><xsl:value-of select="concat(@indexpage,'.html')"/></xsl:attribute><xsl:value-of select="@human-name"/></a></li>
 </xsl:if>
-<xsl:if test="not(@type='index' or @type='mainpage' or @type='apiref')">
+</xsl:otherwise>
+</xsl:choose>
+<xsl:if test="@type='class' or @type='struct' or @type='namespace' or @type='file'">
 <li>
 <xsl:choose>
 <xsl:when test="@type='class'">
@@ -64,6 +70,7 @@
 </li>
 </xsl:if>
 </ul>
+</xsl:if>
 </nav>
 </header>
 <main>

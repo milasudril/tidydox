@@ -31,7 +31,7 @@
 </xsl:template>
 
 <xsl:template match="docparams">
-<docset type="apiref">
+<docset type="apiref" root="true">
 <xsl:apply-templates/>
 </docset>
 </xsl:template>

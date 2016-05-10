@@ -53,5 +53,10 @@ xsltproc --path . --path __doc/xml "$RESOURCEDIR"/apiref.xsl "$DOCPARAMS" \
 echo "Generating main page"
 xsltproc --path . --path __doc/xml --stringparam docparams "$DOCPARAMS" "$RESOURCEDIR"/page.xsl index.xml > __doc/html/index.html
 
+for i in *.xml; do
+	xsltproc --path . --stringparam docparams $DOCPARAMS "$RESOURCEDIR"/page.xsl "$i" \
+		> __doc/html/`basename "${i%.*}.html"`
+done
+
 echo "Copying resources"
 xsltproc --path . "$RESOURCEDIR"/resources.xsl "$DOCPARAMS" | xargs -d '\n' cp -t __doc/html
