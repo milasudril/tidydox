@@ -17,6 +17,14 @@
 
 <xsl:template match="doxygenindex">
 <docset type="index">
+
+<navpath>
+<navitem href="index.html">
+<xsl:value-of select="document($docparams)/docparams/project/@title"/>
+</navitem>
+<navitem href="apiref.html">API reference</navitem>
+</navpath>
+
 <h1 id="top"><xsl:value-of select="$title" /></h1>
 <table class="memberdecls">
 <xsl:apply-templates select="compound[@kind=$kind]"/>

@@ -25,6 +25,19 @@
 
 <xsl:template match="resources"/>
 
+<xsl:template match="navitem">
+<li><a><xsl:attribute name="href"><xsl:value-of select="@href"/></xsl:attribute>
+<xsl:apply-templates /></a></li>
+</xsl:template>
+
+<xsl:template match="navpath">
+<nav>
+<ul>
+<xsl:apply-templates select="navitem"/>
+</ul>
+</nav>
+</xsl:template>
+
 
 <xsl:template match="docset">
 <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;</xsl:text>
@@ -37,44 +50,10 @@
 <body>
 <header>
 <div class="logo"><xsl:value-of select="document($docparams)/docparams/project/@title"/></div>
-<nav>
-<xsl:if test="not(@type='mainpage')">
-<ul>
-	<li><a href="index.html"><xsl:value-of select="document($docparams)/docparams/project/@title"/></a></li>
-<xsl:choose>
-<xsl:when test="@type='class' or @type='struct' or @type='namespace' or @type='file' or @type='index'">
-	<li><a href="apiref.html">API reference</a></li>
-</xsl:when>
-<xsl:otherwise>
-<xsl:if test="not(@root='true')">
-	<li><a><xsl:attribute name="href"><xsl:value-of select="concat(@indexpage,'.html')"/></xsl:attribute><xsl:value-of select="@human-name"/></a></li>
-</xsl:if>
-</xsl:otherwise>
-</xsl:choose>
-<xsl:if test="@type='class' or @type='struct' or @type='namespace' or @type='file'">
-<li>
-<xsl:choose>
-<xsl:when test="@type='class'">
-<a href="classes.html">Classes</a>
-</xsl:when>
-<xsl:when test="@type='struct'">
-<a href="structs.html">Structs</a>
-</xsl:when>
-<xsl:when test="@type='namespace'">
-<a href="namespaces.html">Namespaces</a>
-</xsl:when>
-<xsl:when test="@type='file'">
-<a href="files.html">Files</a>
-</xsl:when>
-</xsl:choose>
-</li>
-</xsl:if>
-</ul>
-</xsl:if>
-</nav>
+<xsl:apply-templates select="navpath"/>
 </header>
 <main>
-<xsl:apply-templates />
+<xsl:apply-templates select="*[not(self::navpath)]"/>
 </main>
 <footer>
 <xsl:apply-templates select="document($docparams)/docparams/project/author"/>

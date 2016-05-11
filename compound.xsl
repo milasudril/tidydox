@@ -23,11 +23,22 @@
 </xsl:template>
 
 <xsl:template match="compounddef">
-<!--This is the main content of the paage-->
+<!--This is the main content of the page-->
 <docset>
 <xsl:attribute name="type">
 <xsl:value-of select="@kind" />
 </xsl:attribute>
+<navpath>
+<navitem href="index.html">
+<xsl:value-of select="document($docparams)/docparams/project/@title"/>
+</navitem>
+<navitem href="apiref.html">API reference</navitem>
+<navitem>
+<xsl:variable name="kind" select="@kind"/>
+<xsl:attribute name="href"><xsl:value-of select="document($docparams)/docparams/apisections/item[@type=$kind]/@page"/></xsl:attribute>
+<xsl:apply-templates select="document($docparams)/docparams/apisections/item[@type=$kind]/node()"/>
+</navitem>
+</navpath>
 <h1 id="top"><!--Create the page title-->
 <xsl:apply-templates select="templateparamlist"/>
 <xsl:value-of select="@kind" /><xsl:text> </xsl:text><xsl:apply-templates select="compoundname" /></h1>

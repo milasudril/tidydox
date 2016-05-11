@@ -32,6 +32,9 @@
 
 <xsl:template match="docparams">
 <docset type="apiref" root="true">
+<navpath>
+<navitem href="index.html"><xsl:value-of select="project/@title"/></navitem>
+</navpath>
 <xsl:apply-templates/>
 </docset>
 </xsl:template>
