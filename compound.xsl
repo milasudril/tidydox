@@ -63,7 +63,7 @@
 </xsl:if>
 <xsl:apply-templates select="detaileddescription"/>
 
-<xsl:if test="sectiondef">
+<xsl:if test="sectiondef|innerclass|innernamespace">
 <p>The following table summarizes all members in this <xsl:value-of select="@kind" />.</p>
 <table class="memberdecls">
 <xsl:apply-templates select="sectiondef[@kind='public-func' or @kind='define' or @kind='typedef' or @kind='func' or @kind='enum']|innerclass|innernamespace" mode="brief"/>
