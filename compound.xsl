@@ -66,13 +66,13 @@
 <xsl:if test="sectiondef|innerclass|innernamespace">
 <p>The following table summarizes all members in this <xsl:value-of select="@kind" />.</p>
 <table class="memberdecls">
-<xsl:apply-templates select="sectiondef[@kind='public-func' or @kind='define' or @kind='typedef' or @kind='func' or @kind='enum']|innerclass|innernamespace" mode="brief"/>
+<xsl:apply-templates select="sectiondef[@kind='public-func' or @kind='public-type' or @kind='define' or @kind='typedef' or @kind='func' or @kind='enum']|innerclass|innernamespace" mode="brief"/>
 </table>
 </xsl:if>
 
 </section>
 
-<xsl:apply-templates select="sectiondef[@kind='public-func' or @kind='define' or @kind='func'  or @kind='enum' or @kind='typedef']" />
+<xsl:apply-templates select="sectiondef[@kind='public-func' or @kind='public-type' or @kind='define' or @kind='func'  or @kind='enum' or @kind='typedef']" />
 
 </docset>
 </xsl:template>
@@ -144,11 +144,16 @@ enum <a><xsl:attribute name="href">#<xsl:value-of select="str:split(@id,'_')[las
 </tr>
 </xsl:template>
 
+<xsl:template match="argsstring">
+<xsl:apply-templates select="node()" />
+</xsl:template>
+
 <xsl:template match="memberdef[@kind='typedef']" mode="brief">
 <!--Brief description entry-->
 <tr><th class="membername">typedef <xsl:apply-templates select="type"/><xsl:text> </xsl:text>
 <a><xsl:attribute name="href">#<xsl:value-of select="str:split(@id,'_')[last()]"/>
-</xsl:attribute><xsl:apply-templates select="name"/></a></th>
+</xsl:attribute><xsl:apply-templates select="name"/></a>
+<xsl:apply-templates select="argsstring" /></th>
 <td class="memberdesc"><xsl:apply-templates select="briefdescription"/></td>
 </tr>
 </xsl:template>
@@ -269,7 +274,9 @@ enum <a><xsl:attribute name="href">#<xsl:value-of select="str:split(@id,'_')[las
 <xsl:attribute name="id"><xsl:value-of select="str:split(@id,'_')[last()]"/></xsl:attribute>
 <xsl:apply-templates select="templateparamlist"/>
 <xsl:apply-templates select="type"/><xsl:text> </xsl:text>
-<xsl:apply-templates select="name"/></h2>
+<xsl:apply-templates select="name"/>
+<xsl:apply-templates select="argsstring"/>
+</h2>
 
 <xsl:if test="@static='yes' or @const='yes' or @explicit='yes' or @inline='yes' or @virt='virtual' or @virt='pure-virtual'">
 <!--Add optional infobox-->
@@ -304,6 +311,11 @@ enum <a><xsl:attribute name="href">#<xsl:value-of select="str:split(@id,'_')[las
 
 <xsl:template match="simplesect[@kind='return']">
 <h3>Return value</h3>
+<xsl:apply-templates select="para"/>
+</xsl:template>
+
+<xsl:template match="simplesect[@kind='see']">
+<h3>See also</h3>
 <xsl:apply-templates select="para"/>
 </xsl:template>
 

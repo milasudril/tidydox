@@ -10,7 +10,7 @@ if [ "$#" -ge 1 ]; then
 fi
 
 rm -rf __doc
-cp "$RESOURCEDIR"/Doxyfile .
+cp -n "$RESOURCEDIR"/Doxyfile .
 
 doxygen  > /dev/null 2>&1
 
