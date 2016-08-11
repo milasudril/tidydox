@@ -3,10 +3,16 @@
 RESOURCEDIR="/usr/local/share/tidydox"
 
 DOCPARAMS="docparams.xml"
+DOCDIR="doc"
 
 if [ "$#" -ge 1 ]; then
 	DOCPARAMS="$1"
 	echo Using parmeters from $DOCPARAMS
+fi
+
+if [ "$#" -ge 2 ]; then
+	DOCDIR="$2"
+	echo Using resources from $DOCDIR
 fi
 
 rm -rf __doc
@@ -56,12 +62,14 @@ xsltproc --path . --path __doc/xml "$RESOURCEDIR"/apiref.xsl "$DOCPARAMS" \
 	| xsltproc --path . --stringparam docparams "$DOCPARAMS" "$RESOURCEDIR"/page.xsl - > __doc/html/apiref.html
 
 echo "Generating main page"
-xsltproc --path . --path __doc/xml --stringparam docparams "$DOCPARAMS" "$RESOURCEDIR"/page.xsl index.xml > __doc/html/index.html
+xsltproc --path . --path __doc/xml --stringparam docparams "$DOCPARAMS" "$RESOURCEDIR"/page.xsl "$DOCDIR"/index.xml > __doc/html/index.html
 
-for i in *.xml; do
+for i in "$DOCDIR"/*.xml; do
 	xsltproc --path . --stringparam docparams $DOCPARAMS "$RESOURCEDIR"/page.xsl "$i" \
 		> __doc/html/`basename "${i%.*}.html"`
 done
 
 echo "Copying resources"
-xsltproc --path . "$RESOURCEDIR"/resources.xsl "$DOCPARAMS" | xargs -d '\n' cp -t __doc/html
+xsltproc --path . "$RESOURCEDIR"/resources.xsl "$DOCPARAMS" \
+	| awk -v docdir="$DOCDIR" '{file=docdir"/"$1; print file}' \
+	| xargs -d '\n' cp -t __doc/html
